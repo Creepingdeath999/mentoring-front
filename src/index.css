@@ -1,0 +1,8 @@
+@import url('//cdn.web-fonts.ge/fonts/alk-rounded-mtav-med/css/alk-rounded-mtav-med.min.css');
+* {
+  font: inherit;
+}
+
+html {
+  font-family: 'ALK Rounded Mtav Med', sans-serif;
+}
