@@ -1,31 +1,15 @@
-import {
-  AppShell,
-  Burger,
-  Header,
-  MediaQuery,
-  useMantineTheme,
-  Center,
-} from '@mantine/core'
-import { Routes, Route } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
-import { ToggleTheme } from '../../common/providers'
-import { Login, Registration } from '../auth'
-import { Navigation, Logo } from '../../common/components'
-import Tasks from './Tasks'
-import { ApplicationContext } from '../../common/providers/ContextProvider'
+import { AppShell, Button, useMantineTheme, Text, Group } from '@mantine/core'
+import { useState } from 'react'
+import { ApplicationHeader, CourseComponent } from '../../common/components'
 import Welcome from './Welcome'
+import { useScrollIntoView } from '@mantine/hooks'
+import { Route, Routes } from 'react-router-dom'
+import Courses from './Courses'
+import { Registration } from '../auth'
 
-interface ILayout {
-  authorized: boolean
-}
 export default () => {
   const theme = useMantineTheme()
   const [opened, setOpened] = useState(false)
-  const tokenState = useContext(ApplicationContext)?.token
-  const [authorized, setAuthorized] = useState(false)
-  if (!tokenState) return null
-  const { token } = tokenState
-  useEffect(() => setAuthorized(token !== null), [])
 
   return (
     <AppShell
@@ -40,26 +24,13 @@ export default () => {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       fixed
-      header={
-        <Header height={70} p="md">
-          <div
-            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
-          >
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
-            <ToggleTheme />
-          </div>
-        </Header>
-      }
+      header={<ApplicationHeader opened setOpened={setOpened} />}
     >
-      <Welcome />
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="courses" element={<Courses />} />
+        <Route path="register" element={<Registration />} />
+      </Routes>
     </AppShell>
   )
 }

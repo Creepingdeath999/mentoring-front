@@ -5,27 +5,14 @@ import {
   ColorScheme,
 } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
-import { useContext, useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useHttp } from './common/hooks'
-import { ToggleTheme } from './common/providers'
-import { ApplicationContext } from './common/providers/ContextProvider'
-import { Login, Registration } from './core/auth'
+import { BrowserRouter } from 'react-router-dom'
 import Layout from './core/pages/Layout'
-import Welcome from './core/pages/Welcome'
 export default () => {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'dark',
   })
-  const tokenState = useContext(ApplicationContext)?.token
-  if (!tokenState) return null
-  const { token, setToken } = tokenState
-  const [authorized, setAuthorized] = useState(false)
 
-  useEffect(() => {
-    useHttp('https://jsonplaceholder.typicode.com/todos/1', {}, console.log)
-  }, [])
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
 

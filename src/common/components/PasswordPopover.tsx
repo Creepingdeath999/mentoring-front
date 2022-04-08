@@ -26,10 +26,9 @@ function PasswordRequirement({
 }
 
 const requirements = [
-  { re: /[0-9]/, label: 'Includes number' },
-  { re: /[a-z]/, label: 'Includes lowercase letter' },
-  { re: /[A-Z]/, label: 'Includes uppercase letter' },
-  { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: 'Includes special symbol' },
+  { re: /[0-6]/, label: 'შეიცავს მინიმუმ ერთ ციფრს' },
+  { re: /[a-z]/, label: 'შეიცავს მინიმუმ ერთ პატარა ასოს' },
+  { re: /[A-Z]/, label: 'შეიცავს მინიმუმ ერთ დიდ ასოს' },
 ]
 
 function getStrength(password: string) {
@@ -79,7 +78,7 @@ export function PasswordStrength({ target, value }: IPasswordPopOver) {
         style={{ marginBottom: 10 }}
       />
       <PasswordRequirement
-        label="Includes at least 6 characters"
+        label="შეიცავს მინიმუმ 6 სიმბოლოს"
         meets={value.length > 5}
       />
       {checks}

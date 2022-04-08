@@ -52,30 +52,15 @@ export const Registration = () => {
       grade: +form.values.grade,
     }
     if (form.validate().hasErrors) {
+      console.log(form.errors)
       return
     }
 
     setVisible(true)
-
-    const registration$ = useHttp('register', {
-      method: 'POST',
-      data: user,
-    }).subscribe({
-      next: (data: any) => {
-        setVisible(false)
-        console.log(data)
-      },
-      error: (err: any) => {
-        setVisible(false)
-        console.log(err.response)
-      },
-    })
-
-    registration$.unsubscribe()
   }
 
   return (
-    <Center sx={{ height: '100vh' }}>
+    <Center>
       <Box sx={{ width: 'min(100%, 500px)', position: 'relative' }}>
         <LoadingOverlay visible={visible} />
         <Group position="center" mt="md">
@@ -86,7 +71,7 @@ export const Registration = () => {
             weight="bold"
             mb="md"
           >
-            Registration
+            რეგისტრაცია
           </Text>
         </Group>
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -95,14 +80,14 @@ export const Registration = () => {
             style={{ display: 'flex', flexFlow: 'row nowrap' }}
           >
             <TextInput
-              label="Firstname"
+              label="სახელი"
               required
               {...form.getInputProps('firstname')}
               formNoValidate
               style={{ flexBasis: '50%' }}
             />
             <TextInput
-              label="Lastname"
+              label="გვარი"
               required
               {...form.getInputProps('lastname')}
               formNoValidate
@@ -110,16 +95,9 @@ export const Registration = () => {
             />
           </Group>
           <TextInput
-            label="Email"
+            label="ელფოსტა"
             required
             {...form.getInputProps('email')}
-            formNoValidate
-          />
-          <TextInput
-            label="Current Grade"
-            required
-            type="number"
-            {...form.getInputProps('grade')}
             formNoValidate
           />
           <PasswordStrength
@@ -127,35 +105,20 @@ export const Registration = () => {
             target={
               <PasswordInput
                 required
-                label="Password"
-                placeholder="Password"
+                label="პაროლი"
+                placeholder="პაროლი"
                 {...form.getInputProps('password')}
               />
             }
           />
-          <MultiSelect
-            data={Tasks.map((x) => ({
-              value: x.value.toString(),
-              label: x.label,
-            }))}
-            label="Tasks which is not graded"
-            placeholder="Select tasks"
-            {...form.getInputProps('activeTasks')}
-          />
-          <Select
-            required
-            data={Mentors}
-            label="Choose mentor"
-            placeholder="Mentors"
-            {...form.getInputProps('mentorEmail')}
-          />
+
           <Group
             position="right"
             mt="md"
             sx={{ display: 'flex', justifyContent: 'space-between' }}
           >
             <Text component={Link} to="/login">
-              Already have an account? login
+              უკვე გაქვთ ანგარიში? <Text color="cyan">შესვლა</Text>
             </Text>
             <Button
               type="submit"
@@ -166,7 +129,7 @@ export const Registration = () => {
                   : { from: 'blue', to: 'dark', deg: 0 }
               }
             >
-              Register
+              რეგისტრაცია
             </Button>
           </Group>
         </form>

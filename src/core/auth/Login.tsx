@@ -28,38 +28,9 @@ export const Login = () => {
     },
   })
   useEffect(() => {}, [])
-  const [visible, setVisible] = useState<boolean>(false)
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault()
-    setVisible(true)
-    const subscription$ = useHttp('login', {
-      method: 'POST',
-      data: form.values,
-    }).subscribe({
-      next: (data) => {
-        const token = data.accessToken
-        const { role } = data.user
-        localStorage.setItem('token', token)
-        localStorage.setItem('role', role)
-        console.log(token)
-        setToken(token)
-        setVisible(false)
-        navigate('/tasks')
-      },
-      error: ({ response }) => {
-        setVisible(false)
-      },
-    })
-    return () => subscription$.unsubscribe()
-  }
-  useEffect(() => {
-    return () => {}
-  }, [])
 
   return (
     <Box sx={{ width: 'min(100%, 500px)', position: 'relative' }}>
-      <LoadingOverlay visible={visible} />
       <Group position="center" mt="md">
         <Text
           variant="gradient"
@@ -71,7 +42,7 @@ export const Login = () => {
           Login
         </Text>
       </Group>
-      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <form style={{ width: '100%' }}>
         <TextInput
           label="Email"
           required
